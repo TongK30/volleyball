@@ -400,7 +400,7 @@ function CourtView({ team, started, liberoInfo, onRotate, onSelectLiberoPosition
           <div className="mb-2 text-center text-[9px] font-black uppercase tracking-[0.2em] text-orange-100/80 sm:text-xs md:tracking-[0.3em]">Lưới</div>
           <div className="mb-2.5 h-1.5 rounded-full bg-white/70 shadow-lg sm:mb-4 sm:h-2" />
 
-          <div className="grid grid-cols-3 gap-1.5 sm:gap-3 md:gap-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4">
             {courtOrder.map((pos) => {
               const info = getCardInfo(pos, team, liberoInfo);
               const player = info.player;
@@ -428,54 +428,54 @@ function CourtView({ team, started, liberoInfo, onRotate, onSelectLiberoPosition
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: dragged === pos ? 0.55 : 1, scale: isHover ? 1.03 : 1 }}
                   transition={{ type: "spring", stiffness: 260, damping: 24 }}
-                  className={`relative min-h-[110px] rounded-xl border p-2 shadow-xl transition sm:min-h-[160px] md:min-h-[190px] md:rounded-[1.5rem] md:p-4 ${info.hasLibero ? "border-sky-200/70 bg-sky-400/25" : isFront ? "border-orange-100/50 bg-orange-100/15" : "border-emerald-100/50 bg-emerald-100/15"} ${started ? "cursor-grab active:cursor-grabbing" : "opacity-80"} ${isHover ? "ring-2 ring-yellow-300/60 sm:ring-4" : ""} ${isManualSelected ? "ring-2 ring-sky-300/80 sm:ring-4" : ""}`}
+                  className={`relative min-h-[135px] rounded-xl border p-1.5 shadow-xl transition sm:min-h-[165px] md:min-h-[195px] md:rounded-[1.5rem] md:p-3 ${info.hasLibero ? "border-sky-200/70 bg-sky-400/25" : isFront ? "border-orange-100/50 bg-orange-100/15" : "border-emerald-100/50 bg-emerald-100/15"} ${started ? "cursor-grab active:cursor-grabbing" : "opacity-80"} ${isHover ? "ring-2 ring-yellow-300/60 sm:ring-4" : ""} ${isManualSelected ? "ring-2 ring-sky-300/80 sm:ring-4" : ""}`}
                 >
-                  <div className="mb-1.5 flex items-center justify-between gap-1 sm:mb-2">
-                    <div className="rounded-full bg-slate-950/75 px-1.5 py-0.5 text-[9px] font-black sm:px-2.5 sm:text-xs">P{pos}</div>
+                  <div className="mb-1 flex items-center justify-between gap-1 sm:mb-2">
+                    <div className="rounded-full bg-slate-950/75 px-1 py-0.2 text-[8px] font-black sm:px-2.5 sm:text-xs">P{pos}</div>
                     <div className="flex items-center gap-1">
-                      {started && <Move size={12} className="hidden text-white/70 sm:block" />}
-                      <div className="rounded-full bg-white/15 px-1.5 py-0.5 text-[9px] font-black sm:px-2.5 sm:text-xs">{player?.role}</div>
+                      {started && <Move size={10} className="hidden text-white/77 sm:block" />}
+                      <div className="rounded-full bg-white/15 px-1 py-0.2 text-[8px] font-black sm:px-2.5 sm:text-xs">{player?.role}</div>
                     </div>
                   </div>
 
                   {player?.number && (
-                    <div className="absolute right-1.5 top-8 flex h-6 w-6 items-center justify-center rounded-lg bg-white text-[10px] font-black text-slate-950 shadow-md sm:right-2.5 sm:top-11 sm:h-9 sm:w-9 sm:text-base md:h-12 md:w-12 md:rounded-2xl md:text-2xl">
+                    <div className="absolute right-1 top-[26px] flex h-[18px] w-[18px] items-center justify-center rounded bg-white text-[8px] font-black text-slate-950 shadow sm:right-2 sm:top-[28px] sm:h-8 sm:w-8 sm:text-sm md:right-3 md:top-10 md:h-11 md:w-11 md:rounded-2xl md:text-xl">
                       {player.number}
                     </div>
                   )}
 
-                  <div className="text-[9px] text-slate-400 sm:text-[11px]">{positionLabels[pos]}</div>
-                  <div className="mt-0.5 pr-6 text-xs font-black leading-tight truncate sm:mt-1.5 sm:pr-10 sm:text-base md:pr-14 md:text-xl">
+                  <div className="text-[8px] text-slate-400 sm:text-[11px]">{positionLabels[pos]}</div>
+                  <div className="mt-0.5 pr-4 text-[11px] font-black leading-tight truncate sm:mt-1 sm:pr-8 sm:text-base md:pr-12 md:text-xl">
                     {player?.name}
                   </div>
-                  <div className="mt-0.5 text-[9px] text-slate-400 sm:text-xs truncate">
+                  <div className="text-[8px] text-slate-400/80 sm:text-xs truncate">
                     {player?.roleName}
                   </div>
 
                   {info.hasLibero && (
-                    <div className="mt-1.5 rounded-lg border border-sky-200/20 bg-sky-950/50 p-1.5 text-sky-100 sm:mt-3 sm:p-2.5">
-                      <div className="text-[8px] font-black uppercase tracking-[0.1em] text-sky-300/90 sm:text-[10px]">L · {info.liberoMode === "manual" ? "Thủ công" : "Auto"}</div>
-                      <div className="mt-0.5 flex flex-wrap items-center gap-1 text-[9px] font-black sm:text-xs md:text-sm">
-                        <Shield size={12} className="sm:size-3.5" />
-                        {info.libero.number && <span className="rounded bg-sky-200 px-1 py-0.2 text-[8px] text-slate-950 sm:text-[9px]">#{info.libero.number}</span>}
-                        <span className="truncate max-w-[55px] sm:max-w-none">{info.libero.name}</span>
+                    <div className="mt-1 rounded border border-sky-200/20 bg-sky-950/40 p-1 text-sky-100 sm:mt-2.5 sm:p-2">
+                      <div className="text-[7px] font-black uppercase tracking-[0.1em] text-sky-300/90 sm:text-[10px]">L · {info.liberoMode === "manual" ? "T.công" : "Auto"}</div>
+                      <div className="mt-0.5 flex flex-wrap items-center gap-0.5 text-[8px] font-black sm:text-xs md:text-sm">
+                        <Shield size={9} className="sm:size-3.5" />
+                        {info.libero.number && <span className="rounded bg-sky-200 px-0.5 py-0.2 text-[7px] text-slate-950 sm:text-[9px]">#{info.libero.number}</span>}
+                        <span className="truncate max-w-[45px] sm:max-w-none">{info.libero.name}</span>
                       </div>
                     </div>
                   )}
 
-                  <div className="mt-2 flex gap-1 sm:gap-2">
-                    <button type="button" disabled={!started} onClick={(e) => { e.stopPropagation(); onSelectLiberoPosition(pos); }} className="flex min-h-7 flex-1 items-center justify-center gap-0.5 rounded-lg bg-sky-300 px-1 py-0.5 text-[9px] font-black text-slate-950 transition hover:bg-sky-200 disabled:opacity-40 sm:min-h-9 sm:px-2 sm:text-xs">
-                      <MousePointer2 size={11} className="sm:size-[13px]" /> L
+                  <div className="mt-1.5 flex gap-1 sm:gap-2">
+                    <button type="button" disabled={!started} onClick={(e) => { e.stopPropagation(); onSelectLiberoPosition(pos); }} className="flex min-h-5 flex-1 items-center justify-center gap-0.5 rounded bg-sky-300 px-1 py-0.5 text-[8px] font-black text-slate-950 transition hover:bg-sky-200 disabled:opacity-40 sm:min-h-9 sm:px-2 sm:text-xs">
+                      <MousePointer2 size={9} className="sm:size-[13px]" /> L
                     </button>
                     {isManualSelected && (
-                      <button type="button" onClick={(e) => { e.stopPropagation(); onClearLibero(); }} className="min-h-7 rounded-lg bg-rose-400 px-1.5 text-[9px] font-black text-slate-950 transition hover:bg-rose-300 sm:min-h-9 sm:px-2.5 sm:text-xs">
-                        <X size={11} className="sm:size-[13px]" />
+                      <button type="button" onClick={(e) => { e.stopPropagation(); onClearLibero(); }} className="min-h-5 rounded bg-rose-400 px-1 text-[8px] font-black text-slate-950 transition hover:bg-rose-300 sm:min-h-9 sm:px-2.5 sm:text-xs">
+                        <X size={9} className="sm:size-[13px]" />
                       </button>
                     )}
                   </div>
 
                   {pos === 1 && (
-                    <div className="absolute -right-0.5 -top-1 rounded-full bg-yellow-300 px-1.5 py-0.5 text-[9px] font-black text-slate-950 shadow-md sm:-right-2 sm:-top-2 sm:px-2.5 sm:text-xs">
+                    <div className="absolute -right-0.5 -top-1 rounded-full bg-yellow-300 px-1 py-0.2 text-[8px] font-black text-slate-950 shadow-md sm:-right-2 sm:-top-2 sm:px-2.5 sm:text-xs">
                       SERVE
                     </div>
                   )}
