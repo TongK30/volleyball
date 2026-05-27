@@ -753,7 +753,7 @@ export default function VolleyballRotationSimulator() {
         <MobileMatchBoard score={score} servingTeam={servingTeam} setNumber={setNumber} onHomePoint={() => scorePoint("home")} onOpponentPoint={() => scorePoint("opponent")} onStartMatch={startMatch} onResetMatch={resetMatch} onToggleCompact={() => setCompactMode(true)} />
       )}
 
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto w-full px-1 sm:px-4">
         {compactMode ? (
           <div className="space-y-4">
             {/* COMPACT TOP BAR & SCOREBOARD */}
