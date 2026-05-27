@@ -166,7 +166,13 @@ function addHistory(list, item) {
   return [item, ...list].slice(0, 80);
 }
 
-function SectionTitle({ icon: Icon, title, desc }) {
+interface SectionTitleProps {
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  title: string;
+  desc?: string;
+}
+
+function SectionTitle({ icon: Icon, title, desc }: SectionTitleProps) {
   return (
     <div className="mb-4 flex items-start gap-3">
       <div className="rounded-2xl bg-emerald-400/15 p-2 text-emerald-200 ring-1 ring-emerald-300/20">
@@ -180,7 +186,11 @@ function SectionTitle({ icon: Icon, title, desc }) {
   );
 }
 
-function ServeToast({ toast }) {
+interface ServeToastProps {
+  toast: { team: string; server: string; id: number } | null;
+}
+
+function ServeToast({ toast }: ServeToastProps) {
   return (
     <AnimatePresence>
       {toast && (
@@ -200,7 +210,18 @@ function ServeToast({ toast }) {
   );
 }
 
-function MobileMatchBoard({ score, servingTeam, setNumber, onHomePoint, onOpponentPoint, onStartMatch, onResetMatch, onToggleCompact }) {
+interface MobileMatchBoardProps {
+  score: { home: number; opponent: number };
+  servingTeam: "home" | "opponent";
+  setNumber: number;
+  onHomePoint: () => void;
+  onOpponentPoint: () => void;
+  onStartMatch: () => void;
+  onResetMatch: () => void;
+  onToggleCompact: () => void;
+}
+
+function MobileMatchBoard({ score, servingTeam, setNumber, onHomePoint, onOpponentPoint, onStartMatch, onResetMatch, onToggleCompact }: MobileMatchBoardProps) {
   return (
     <div className="sticky top-0 z-40 -mx-3 mb-3 border-b border-white/10 bg-slate-950/95 px-3 py-3 shadow-2xl backdrop-blur md:hidden">
       <div className="mb-2 flex items-center justify-between gap-2">
@@ -242,7 +263,20 @@ function MobileMatchBoard({ score, servingTeam, setNumber, onHomePoint, onOppone
   );
 }
 
-function PlayerForm({ team, onUpdatePlayer, onUpdateLibero, onAddLibero, onRemoveLibero, onSelectActiveLibero, onStart, onReset, onSetLiberoMode, onClearLibero }) {
+interface PlayerFormProps {
+  team: any;
+  onUpdatePlayer: (playerKey: string, field: string, value: string) => void;
+  onUpdateLibero: (liberoId: string, field: string, value: string) => void;
+  onAddLibero: () => void;
+  onRemoveLibero: (liberoId: string) => void;
+  onSelectActiveLibero: (liberoId: string) => void;
+  onStart: () => void;
+  onReset: () => void;
+  onSetLiberoMode: (mode: string) => void;
+  onClearLibero: () => void;
+}
+
+function PlayerForm({ team, onUpdatePlayer, onUpdateLibero, onAddLibero, onRemoveLibero, onSelectActiveLibero, onStart, onReset, onSetLiberoMode, onClearLibero }: PlayerFormProps) {
   return (
     <Card className="border-white/10 bg-white/10 text-white shadow-2xl backdrop-blur">
       <CardContent className="p-4 md:p-5">
@@ -324,9 +358,19 @@ function PlayerForm({ team, onUpdatePlayer, onUpdateLibero, onAddLibero, onRemov
   );
 }
 
-function CourtView({ team, started, liberoInfo, onRotate, onSelectLiberoPosition, onClearLibero, onSwapPositions }) {
-  const [dragged, setDragged] = useState(null);
-  const [hover, setHover] = useState(null);
+interface CourtViewProps {
+  team: any;
+  started: boolean;
+  liberoInfo: any;
+  onRotate: () => void;
+  onSelectLiberoPosition: (pos: number) => void;
+  onClearLibero: () => void;
+  onSwapPositions: (a: number, b: number) => void;
+}
+
+function CourtView({ team, started, liberoInfo, onRotate, onSelectLiberoPosition, onClearLibero, onSwapPositions }: CourtViewProps) {
+  const [dragged, setDragged] = useState<number | null>(null);
+  const [hover, setHover] = useState<number | null>(null);
 
   function dragStart(e, pos) {
     if (!started) return;
@@ -445,7 +489,14 @@ function CourtView({ team, started, liberoInfo, onRotate, onSelectLiberoPosition
   );
 }
 
-function InfoPanel({ title, team, liberoInfo, history }) {
+interface InfoPanelProps {
+  title: string;
+  team: any;
+  liberoInfo: any;
+  history: any[];
+}
+
+function InfoPanel({ title, team, liberoInfo, history }: InfoPanelProps) {
   const serverInfo = getCardInfo(1, team, liberoInfo);
   const server = serverInfo.hasLibero ? `${formatPlayer(serverInfo.player)} / ${formatPlayer(serverInfo.libero)}` : formatPlayer(serverInfo.player);
 
@@ -498,21 +549,25 @@ function InfoPanel({ title, team, liberoInfo, history }) {
 }
 
 export default function VolleyballRotationSimulator() {
-  const [activeTab, setActiveTab] = useState("match");
+  const [activeTab, setActiveTab] = useState<string>("match");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [started, setStarted] = useState(false);
-  const [servingTeam, setServingTeam] = useState("home");
+  const [servingTeam, setServingTeam] = useState<"home" | "opponent">("home");
   const [score, setScore] = useState({ home: 0, opponent: 0 });
   const [setNumber, setSetNumber] = useState(1);
   const [teams, setTeams] = useState({ home: makeTeam("Đội mình", ""), opponent: makeTeam("Đối thủ", "ĐT ") });
-  const [histories, setHistories] = useState({ home: [], opponent: [], match: [] });
-  const [serveToast, setServeToast] = useState(null);
+  const [histories, setHistories] = useState<{ home: any[]; opponent: any[]; match: any[] }>({ home: [], opponent: [], match: [] });
+  const [serveToast, setServeToast] = useState<{ team: string; server: string; id: number } | null>(null);
   const [compactMode, setCompactMode] = useState(false);
 
   const homeLibero = useMemo(() => getLiberoInfo(teams.home), [teams.home]);
   const opponentLibero = useMemo(() => getLiberoInfo(teams.opponent), [teams.opponent]);
 
-  const tabs = [["match", "Trận", Trophy], ["home", "Đội mình", Users], ["opponent", "Đối thủ", Swords]];
+  const tabs: [string, string, React.ComponentType<any>][] = [
+    ["match", "Trận", Trophy],
+    ["home", "Đội mình", Users],
+    ["opponent", "Đối thủ", Swords]
+  ];
 
   function updateTeam(teamKey, updater) {
     setTeams((prev) => ({ ...prev, [teamKey]: updater(prev[teamKey]) }));
@@ -654,7 +709,7 @@ export default function VolleyballRotationSimulator() {
     setHistories((prev) => ({ ...prev, match: [] }));
   }
 
-  function scorePoint(winner) {
+  function scorePoint(winner: "home" | "opponent") {
     if (!started) {
       startMatch();
       return;
