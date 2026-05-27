@@ -71,3 +71,6 @@ export default defineConfig([
   },
 ])
 ```
+
+## Vercel Deployment Info
+Deployed successfully on Vercel.
